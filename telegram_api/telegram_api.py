@@ -30,7 +30,8 @@ class TelegramAPI:
         if response['ok']:
             return response['result']
         else:
-            raise Exception('**ERROR**\nError code: {}\nDescription:{}\n'.format(response['error_code']))
+            raise Exception('**ERROR**\nError code: {}\nDescription:{}\n'.format(response['error_code'],
+                                                                                 response['description']))
 
     TELEGRAM__BOT_API_URL = 'https://api.telegram.org/bot'
     API_TOKEN = '107989381:AAELyekLkl9EMzneRxHkqOF89fSQitltI2M'
