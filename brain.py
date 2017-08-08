@@ -1,5 +1,5 @@
-from telegram_api.telegram_api import Brain
+from telegram_api.telegram_api import TelegramAPI
 
-me = Brain.get_me()
+api = TelegramAPI()
 
-print me['ok']
+print api.get_me()
