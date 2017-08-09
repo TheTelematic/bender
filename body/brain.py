@@ -54,8 +54,6 @@ class Brain(TelegramAPI):
         elif chat['username'] == 'TheTelematic':
             text = 'Hey Boss!'
 
-
-
         return text
 
     @staticmethod
