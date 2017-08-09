@@ -11,8 +11,8 @@ class TelegramAPI:
 
         return self._get_response('getMe')
 
-    def get_messages(self):
-        return self._get_response('getUpdates')
+    def get_updates(self, offset=None):
+        return self._get_response('getUpdates', offset=offset)
 
     def _get_response(self, method, **kwargs):
         """Make a request of the method and get a response from Telegram
@@ -43,5 +43,10 @@ class TelegramAPI:
         :param kwargs: Extra parameters
         :return:
         """
+        query = self.TELEGRAM__BOT_API_URL + self.API_TOKEN + '/' + method
+        payload = {}
 
-        return requests.get(self.TELEGRAM__BOT_API_URL + self.API_TOKEN + '/' + method).text
+        for key, value in kwargs.iteritems():
+            payload[key] = value
+
+        return requests.post(query, data=payload).text
