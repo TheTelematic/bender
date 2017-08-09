@@ -14,7 +14,7 @@ class Brain(TelegramAPI):
     def run(self):
         self.process_messages()
 
-        threading.Timer(5, self.run).start()
+        threading.Timer(2, self.run).start()
 
     def process_messages(self):
         updates_json = self.get_updates(offset=self.last_update_id)
@@ -28,3 +28,9 @@ class Brain(TelegramAPI):
             print up
 
             self.last_update_id = up.update_id + 1
+
+            self.say_hello(up.message)
+
+    def say_hello(self, message):
+
+        self.send_message(chat_id=message.chat['id'], text="Hola {}".format(message.chat['first_name']))

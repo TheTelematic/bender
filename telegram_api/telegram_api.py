@@ -14,6 +14,14 @@ class TelegramAPI:
     def get_updates(self, offset=None):
         return self._get_response('getUpdates', offset=offset)
 
+    def send_message(self, chat_id, text):
+
+        return self._get_response('sendMessage', chat_id=chat_id, text=text)
+
+    """
+        Private methods
+    """
+
     def _get_response(self, method, **kwargs):
         """Make a request of the method and get a response from Telegram
 
