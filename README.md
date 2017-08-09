@@ -1,1 +1,1 @@
-A Telegram bot
+A Telegram bot - @TelematicBot
