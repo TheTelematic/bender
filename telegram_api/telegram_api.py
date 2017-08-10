@@ -1,5 +1,6 @@
 import requests
 import json
+from parameters import TELEGRAM_BOT_API_URL, TELEGRAM_BOT_API_TOKEN
 
 
 class TelegramAPI:
@@ -41,8 +42,7 @@ class TelegramAPI:
             raise Exception('**ERROR**\nError code: {}\nDescription:{}\n'.format(response['error_code'],
                                                                                  response['description']))
 
-    TELEGRAM__BOT_API_URL = 'https://api.telegram.org/bot'
-    API_TOKEN = '107989381:AAELyekLkl9EMzneRxHkqOF89fSQitltI2M'
+
 
     def _do_request(self, method, **kwargs):
         """Do a request to the Telegram Bot API
@@ -51,7 +51,7 @@ class TelegramAPI:
         :param kwargs: Extra parameters
         :return:
         """
-        query = self.TELEGRAM__BOT_API_URL + self.API_TOKEN + '/' + method
+        query = TELEGRAM_BOT_API_URL + TELEGRAM_BOT_API_TOKEN + '/' + method
         payload = {}
 
         for key, value in kwargs.iteritems():
