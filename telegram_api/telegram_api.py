@@ -15,9 +15,9 @@ class TelegramAPI:
     def get_updates(self, offset=None):
         return self._get_response('getUpdates', offset=offset)
 
-    def send_message(self, chat_id, text):
+    def send_message(self, chat_id, text, parse_mode='Markdown'):
 
-        return self._get_response('sendMessage', chat_id=chat_id, text=text)
+        return self._get_response('sendMessage', chat_id=chat_id, text=text, parse_mode=parse_mode)
 
     """
         Private methods

@@ -1,3 +1,5 @@
+import datetime
+
 from message import Message
 
 
@@ -21,4 +23,5 @@ class Update:
                                text=update_message['message']['text'])
 
     def __str__(self):
-        return '[{}] {}'.format(self.update_id, self.message.__str__().encode('unicode-escape'))
+        return '{}[{}] {}\n'.format(datetime.datetime.now().__str__(), self.update_id, self.message.__str__()
+                                    .encode('unicode-escape'))

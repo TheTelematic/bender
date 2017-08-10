@@ -19,12 +19,17 @@ class Brain(TelegramAPI):
         threading.Timer(2, self.run).start()
 
     def process_messages(self):
+
+        log = open('log.txt', mode='a')
+
         updates_json = self.get_updates(offset=self.last_update_id)
 
         for update in updates_json:
             up = Update(update)
 
             self.updates.append(up)
+
+            log.write(up.__str__())
 
             print up
 

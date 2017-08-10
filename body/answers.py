@@ -1,6 +1,6 @@
 import json
 
-import requests
+import unirest as unirest
 
 from body.secrets import TOKEN_API_MASHAPE
 
@@ -12,14 +12,14 @@ class RandomAnswer:
 
     @staticmethod
     def get():
-        response = requests.post('https://andruxnet-random-famous-quotes.p.mashape.com/?cat=movies',
-                                 data={
-                                     "X-Mashape-Key": TOKEN_API_MASHAPE,
-                                     "Content-Type": "application/x-www-form-urlencoded",
-                                     "Accept": "application/json"
-                                 }).text
 
-        quote = json.loads(response)
+        url = 'https://andruxnet-random-famous-quotes.p.mashape.com/?cat=movies&count=1'
 
-        print quote
-        return quote
+        payload = {'X-Mashape-Key': TOKEN_API_MASHAPE, 'Content-Type': "application/x-www-form-urlencoded",
+                   'Accept': 'application/json'}
+
+        response = unirest.post(url=url, headers=payload)
+
+        quote = response.body
+
+        return quote['quote'] + ' - __' + quote['author'] + '__'
