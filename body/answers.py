@@ -1,14 +1,25 @@
-from HTMLParser import HTMLParser
-from BeautifulSoup import BeautifulSoup
+import json
 
 import requests
 
+from body.secrets import TOKEN_API_MASHAPE
 
-class RandomAnswer(HTMLParser):
+
+class RandomAnswer:
+
+    def __init__(self):
+        pass
+
     @staticmethod
     def get():
-        response = requests.get('http://random-answer.goodplace.eu/').text
+        response = requests.post('https://andruxnet-random-famous-quotes.p.mashape.com/?cat=movies',
+                                 data={
+                                     "X-Mashape-Key": TOKEN_API_MASHAPE,
+                                     "Content-Type": "application/x-www-form-urlencoded",
+                                     "Accept": "application/json"
+                                 }).text
 
-        parsed_html = BeautifulSoup(response)
-        return parsed_html.body.find('a', attrs={'href': 'http://random-answer.goodplace.eu', 'id': 'mylink'}).text\
-            .replace('"', '')
+        quote = json.loads(response)
+
+        print quote
+        return quote

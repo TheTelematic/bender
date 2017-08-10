@@ -42,9 +42,8 @@ class TelegramAPI:
             raise Exception('**ERROR**\nError code: {}\nDescription:{}\n'.format(response['error_code'],
                                                                                  response['description']))
 
-
-
-    def _do_request(self, method, **kwargs):
+    @staticmethod
+    def _do_request(method, **kwargs):
         """Do a request to the Telegram Bot API
 
         :param method: Method to send

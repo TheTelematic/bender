@@ -37,7 +37,9 @@ class Brain(TelegramAPI):
         chat_id = message.chat['id']
 
         if message.text[0] == '/':
+
             text = self.process_command(message.text)
+
         else:
 
             text = self._get_text_message(message.chat)

@@ -21,7 +21,4 @@ class Update:
                                text=update_message['message']['text'])
 
     def __str__(self):
-        try:
-            return '[{}] {}'.format(self.update_id, self.message.__str__())
-        except UnicodeEncodeError:
-            return "Contiene emoji"
+        return '[{}] {}'.format(self.update_id, self.message.__str__().encode('unicode-escape'))
