@@ -1,6 +1,5 @@
-import sys
-
 from body import answers
+from body import eyes
 from body.memory import COMMAND_TALK, UNKNOWN_COMMAND, COMMAND_NEW
 from body import subconscient
 
@@ -18,7 +17,7 @@ class Brain(TelegramAPI):
         TelegramAPI.__init__(self)
         self.graceful_shutdown = False
 
-        print "Welcome to Bender bot!"
+        eyes.print_blue("Welcome to Bender bot!", bold=True)
 
         threading.Thread(target=self.worker_shell).start()
 
@@ -89,11 +88,14 @@ class Brain(TelegramAPI):
         return UNKNOWN_COMMAND
 
     def worker_shell(self):
+
         before_command = ''
+
         while 1:
             command = ''
             try:
-                command = raw_input('> ')
+                eyes.print_green('> ', newline='')
+                command = raw_input()
             except EOFError:
                 self.graceful_shutdown = True
 
@@ -101,11 +103,11 @@ class Brain(TelegramAPI):
                 command = before_command
 
             if command == 'skip' or command == 'go':
-                print "Skipping messages"
+                eyes.print_warning("Skipping messages")
                 self.last_update_id += 1
                 print self.last_update_id
             elif command == 'exit' or command == 'q':
-                print 'Exiting...'
+                eyes.print_warning('Exiting...')
                 self.graceful_shutdown = True
                 break
 
