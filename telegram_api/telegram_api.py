@@ -50,10 +50,10 @@ class TelegramAPI:
         :param kwargs: Extra parameters
         :return:
         """
-        query = TELEGRAM_BOT_API_URL + TELEGRAM_BOT_API_TOKEN + '/' + method
+        url = TELEGRAM_BOT_API_URL + TELEGRAM_BOT_API_TOKEN + '/' + method
         payload = {}
 
         for key, value in kwargs.iteritems():
             payload[key] = value
 
-        return requests.post(query, data=payload).text
+        return requests.post(url=url, data=payload).text

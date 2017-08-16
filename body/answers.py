@@ -1,5 +1,3 @@
-import json
-
 import unirest as unirest
 
 from body.secrets import TOKEN_API_MASHAPE

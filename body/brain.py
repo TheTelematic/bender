@@ -1,8 +1,12 @@
+import sys
+
 from body import answers
-from body.memory import COMMAND_TALK, UNKNOWN_COMMAND
-from telegram_api.telegram_api import TelegramAPI
+from body.memory import COMMAND_TALK, UNKNOWN_COMMAND, COMMAND_NEW
+from body import subconscient
+
 import threading
 
+from telegram_api.telegram_api import TelegramAPI
 from telegram_api.update import Update
 
 
@@ -12,8 +16,16 @@ class Brain(TelegramAPI):
 
     def __init__(self):
         TelegramAPI.__init__(self)
+        self.graceful_shutdown = False
+
+        print "Welcome to Bender bot!"
+
+        threading.Thread(target=self.worker_shell).start()
 
     def run(self):
+        if self.graceful_shutdown:
+            exit(0)
+
         self.process_messages()
 
         threading.Timer(2, self.run).start()
@@ -30,10 +42,11 @@ class Brain(TelegramAPI):
             self.updates.append(up)
 
             log.write(up.__str__())
-
-            print up
+            log.flush()
 
             self.last_update_id = up.update_id + 1
+
+            # print "LAST UPDATE ID:", self.last_update_id
 
             self.get_answer(up.message)
 
@@ -70,4 +83,30 @@ class Brain(TelegramAPI):
 
             return answers.RandomAnswer.get()
 
+        elif text == COMMAND_NEW:
+            return subconscient.get_new()
+
         return UNKNOWN_COMMAND
+
+    def worker_shell(self):
+        before_command = ''
+        while 1:
+            command = ''
+            try:
+                command = raw_input('> ')
+            except EOFError:
+                self.graceful_shutdown = True
+
+            if command == '':
+                command = before_command
+
+            if command == 'skip' or command == 'go':
+                print "Skipping messages"
+                self.last_update_id += 1
+                print self.last_update_id
+            elif command == 'exit' or command == 'q':
+                print 'Exiting...'
+                self.graceful_shutdown = True
+                break
+
+            before_command = command
