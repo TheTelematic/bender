@@ -1,6 +1,6 @@
-from body import answers
+from body import answers, converter
 from body import eyes
-from body.memory import COMMAND_TALK, UNKNOWN_COMMAND, COMMAND_NEW
+from body.memory import *
 from body import subconscient
 
 import threading
@@ -55,13 +55,15 @@ class Brain(TelegramAPI):
 
         if message.text[0] == '/':
 
-            text = self.process_command(message.text)
+            text, method = self.process_command(message.text)
+
+            method(chat_id, text)
 
         else:
 
             text = self._get_text_message(message.chat)
 
-        self.send_message(chat_id=chat_id, text=text)
+            self.send_message(chat_id=chat_id, text=text)
 
     @staticmethod
     def _get_text_message(chat):
@@ -75,17 +77,34 @@ class Brain(TelegramAPI):
 
         return text
 
-    @staticmethod
-    def process_command(text):
+    def process_command(self, text):
 
-        if text == COMMAND_TALK:
+        splitted_commands = text.split(' ')
+
+        if splitted_commands[0] == COMMAND_TALK:
 
             return answers.RandomAnswer.get()
 
-        elif text == COMMAND_NEW:
+        elif splitted_commands[0] == COMMAND_NEW:
             return subconscient.get_new()
 
-        return UNKNOWN_COMMAND
+        elif splitted_commands[0] == COMMAND_START:
+
+            help = COMMAND_TALK + ' -> ' + HELP_TALK + '\n'
+            help += COMMAND_NEW + ' -> ' + HELP_NEW + '\n'
+            help += COMMAND_YOUTUBE2MP3 + ' -> ' + HELP_YOUTUBE2MP3 + '\n'
+
+            return help
+
+        elif splitted_commands[0] == COMMAND_YOUTUBE2MP3:
+
+            url_videos = splitted_commands[1].split('\n')
+
+            urls_audios = converter.youtube2mp3(url_videos)
+
+            return urls_audios, self.send_audios
+
+        return UNKNOWN_COMMAND, self.send_message
 
     def worker_shell(self):
 
@@ -112,3 +131,13 @@ class Brain(TelegramAPI):
                 break
 
             before_command = command
+
+    def send_audios(self, chat_id, audios):
+
+        for audio in audios:
+
+            self.send_message(chat_id=chat_id, text=audio['title'])
+
+            # self.send_audio(chat_id=chat_id, url=audio['link'])  # Da un error 400
+
+            self.send_message(chat_id=chat_id, text=audio['link'])
