@@ -83,10 +83,10 @@ class Brain(TelegramAPI):
 
         if splitted_commands[0] == COMMAND_TALK:
 
-            return answers.RandomAnswer.get()
+            return answers.RandomAnswer.get(), self.send_message
 
         elif splitted_commands[0] == COMMAND_NEW:
-            return subconscient.get_new()
+            return subconscient.get_new(), self.send_message
 
         elif splitted_commands[0] == COMMAND_START:
 
@@ -94,9 +94,12 @@ class Brain(TelegramAPI):
             help += COMMAND_NEW + ' -> ' + HELP_NEW + '\n'
             help += COMMAND_YOUTUBE2MP3 + ' -> ' + HELP_YOUTUBE2MP3 + '\n'
 
-            return help
+            return help, self.send_message
 
         elif splitted_commands[0] == COMMAND_YOUTUBE2MP3:
+            if len(splitted_commands) == 1:
+                return 'Debe de especificar la url del video junto al comando (separado por un espacio)', \
+                       self.send_message
 
             url_videos = splitted_commands[1].split('\n')
 
