@@ -1,1 +1,1 @@
-worker: python bender.py
+web: python bender.py
