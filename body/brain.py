@@ -32,10 +32,20 @@ class Brain(TelegramAPI):
     def process_messages(self):
 
         log = open('log.txt', mode='a')
+        raw_log = open('raw_log.txt', mode='a')
 
         updates_json = self.get_updates(offset=self.last_update_id)
 
+        raw_log.write('UPDATES_JSON->' + '\n')
+        raw_log.write(str(updates_json) + '\n')
+        raw_log.flush()
+
         for update in updates_json:
+
+            raw_log.write('UPDATE_>' + '\n')
+            raw_log.write(str(update) + '\n')
+            raw_log.flush()
+
             up = Update(update)
 
             self.updates.append(up)

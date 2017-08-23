@@ -1,5 +1,7 @@
 import requests
 import json
+
+from body import eyes
 from parameters import TELEGRAM_BOT_API_URL, TELEGRAM_BOT_API_TOKEN
 
 
@@ -21,7 +23,12 @@ class TelegramAPI:
 
     def send_audio(self, chat_id, url):
 
-        return self._get_response('sendAudio', chat_id=chat_id, audio=url)
+        while True:
+            try:
+                return self._get_response('sendAudio', chat_id=chat_id, audio=url)
+            except Exception:
+                eyes.print_fail('Trying again convert the video')
+
 
     """
         Private methods

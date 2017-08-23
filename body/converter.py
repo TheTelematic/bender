@@ -16,13 +16,21 @@ def youtube2mp3(urls_videos):
 
         response = requests.post(url=built_url).text
 
-        # print_warning(response)
+        print_warning(response)
+        try:
+            response = json.loads(response)
+        except ValueError:
+            response = response.split('url=')[1].replace("\" />", '')
 
-        response = json.loads(response)
-
-        url_audios.append({
-            'title': response['title'],
-            'link': response['link']
-        })
+        try:
+            url_audios.append({
+                'title': response['title'],
+                'link': response['link']
+            })
+        except TypeError:
+            url_audios.append({
+                'title': '.',
+                'link': response
+            })
 
     return url_audios

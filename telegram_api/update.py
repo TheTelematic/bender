@@ -17,10 +17,18 @@ class Update:
         :param update_message: Update received in JSON format
         :type update_message: Dict
         """
-        self.update_id = update_message['update_id']
-        self.message = Message(message_id=update_message['message']['message_id'],
-                               date=update_message['message']['date'], chat=update_message['message']['chat'],
-                               text=update_message['message']['text'])
+        if 'document' in update_message['message'] \
+                or 'sticker' in update_message['message']:
+
+            self.update_id = update_message['update_id']
+            self.message = Message(message_id=update_message['message']['message_id'],
+                                   date=update_message['message']['date'], chat=update_message['message']['chat'],
+                                   text='Media found, this is not supported yet.')
+        else:
+            self.update_id = update_message['update_id']
+            self.message = Message(message_id=update_message['message']['message_id'],
+                                   date=update_message['message']['date'], chat=update_message['message']['chat'],
+                                   text=update_message['message']['text'])
 
     def __str__(self):
         return '{}[{}] {}\n'.format(datetime.datetime.now().__str__(), self.update_id, self.message.__str__()
