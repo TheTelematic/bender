@@ -1,5 +1,4 @@
 import requests
-from eyes import print_warning
 
 API_FIRST_STEP = 'http://api.convert2mp3.cc/check.php?v='
 API_SECOND_STEP_1 = 'http://dl'
