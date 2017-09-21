@@ -2,3 +2,5 @@
 .idea/
 body/secrets.py
 telegram_api/parameters.py
+log.txt
+raw_log.txt
