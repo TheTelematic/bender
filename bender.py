@@ -1,5 +1,11 @@
 from body.brain import Brain
 
-bender = Brain()
 
-bender.run()
+def main():
+    bender = Brain()
+
+    bender.run()
+
+
+if __name__ == '__main__':
+    main()
