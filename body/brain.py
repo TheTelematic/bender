@@ -149,7 +149,7 @@ class Brain(TelegramAPI):
 
         for audio in audios:
 
-            self.send_message(chat_id=chat_id, text=audio['title'])
+            # self.send_message(chat_id=chat_id, text=audio['title'])
 
             if audio['link'] != 'ERROR':
                 self.send_audio(chat_id=chat_id, url=audio['link'], title=audio['title'])

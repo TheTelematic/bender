@@ -25,7 +25,7 @@ class TelegramAPI:
 
         while True:
             try:
-                return self._get_response('sendAudio', chat_id=chat_id, audio=url, title=title)
+                return self._get_response('sendAudio', chat_id=chat_id, audio=url, caption=title)
             except Exception:
                 eyes.print_fail('Trying again sending the audio')
 
