@@ -26,8 +26,10 @@ class TelegramAPI:
         while True:
             try:
                 return self._get_response('sendAudio', chat_id=chat_id, audio=url, title=title, caption=title)
-            except Exception:
+            except Exception, e:
                 eyes.print_fail('Trying again sending the audio')
+                eyes.print_fail(str(e))
+                return "Sorry, '{}' couldn't be converted, try again later".format(title)
 
 
     """
