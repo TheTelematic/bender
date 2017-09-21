@@ -19,8 +19,6 @@ def youtube2mp3(urls_videos):
 
         response = requests.post(url=built_url).text
 
-        print_warning(response)
-
         splitted_response = response.split('|')
         if splitted_response[0] != 'OK':
             song = 'ERROR'

@@ -151,6 +151,7 @@ class Brain(TelegramAPI):
 
             self.send_message(chat_id=chat_id, text=audio['title'])
 
-            self.send_audio(chat_id=chat_id, url=audio['link'])  # Da un error 400
+            if audio['link'] != 'ERROR':
+                self.send_audio(chat_id=chat_id, url=audio['link'], title=audio['title'])
 
             # self.send_message(chat_id=chat_id, text=audio['link'])

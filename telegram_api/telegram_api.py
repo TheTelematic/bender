@@ -21,13 +21,13 @@ class TelegramAPI:
 
         return self._get_response('sendMessage', chat_id=chat_id, text=text, parse_mode=parse_mode)
 
-    def send_audio(self, chat_id, url):
+    def send_audio(self, chat_id, url, title):
 
         while True:
             try:
-                return self._get_response('sendAudio', chat_id=chat_id, audio=url)
+                return self._get_response('sendAudio', chat_id=chat_id, audio=url, title=title)
             except Exception:
-                eyes.print_fail('Trying again convert the video')
+                eyes.print_fail('Trying again sending the audio')
 
 
     """

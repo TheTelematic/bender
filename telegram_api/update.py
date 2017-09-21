@@ -18,7 +18,7 @@ class Update:
         :type update_message: Dict
         """
         if 'document' in update_message['message'] \
-                or 'sticker' in update_message['message']:
+                or 'sticker' in update_message['message'] or 'audio' in update_message['message']:
 
             self.update_id = update_message['update_id']
             self.message = Message(message_id=update_message['message']['message_id'],
